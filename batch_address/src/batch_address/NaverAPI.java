@@ -25,7 +25,7 @@ public class NaverAPI {
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
             con.setRequestMethod("GET");
-            con.setRequestProperty("X-Naver-Client-Id", CLIENT_ID);  //x를 써준건 내가 만든 헤더값이라고 알려주는거
+            con.setRequestProperty("X-Naver-Client-Id", CLIENT_ID);
             con.setRequestProperty("X-Naver-Client-Secret", SLICENT_SECRET);
             int responseCode = con.getResponseCode();
             BufferedReader br;

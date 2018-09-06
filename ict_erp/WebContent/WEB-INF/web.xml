@@ -4,6 +4,8 @@
   <welcome-file-list>
     <welcome-file>/WEB-INF/views/index.jsp</welcome-file>
   </welcome-file-list>
+  
+  <!-- 서블릿  -->
   <servlet>
     <servlet-name>ViewServlet</servlet-name>
     <servlet-class>com.ict.erp.controller.ViewServlet</servlet-class>
@@ -60,6 +62,8 @@
     <servlet-name>TicketMovieServlet</servlet-name>
     <url-pattern>/ticketMovie/*</url-pattern>
   </servlet-mapping>
+  <!-- 서블릿  -->
+  <!-- 에러 -->
   <error-page>
     <error-code>404</error-code>
     <location>/WEB-INF/views/error/404.jsp</location>
@@ -68,6 +72,8 @@
     <error-code>500</error-code>
     <location>/WEB-INF/views/error/500.jsp</location>
   </error-page>
+    <!-- 에러 -->
+    <!-- 필터 -->
   <filter>
     <filter-name>AuthFilter</filter-name>
     <filter-class>com.ict.erp.filer.AuthFilter</filter-class>
@@ -88,4 +94,5 @@
     <filter-name>EncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+   <!-- 필터 -->
 </web-app>
