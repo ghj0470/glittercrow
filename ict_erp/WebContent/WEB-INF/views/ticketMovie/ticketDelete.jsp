@@ -5,7 +5,7 @@
 <script>
 	
 	if(${rMap.cnt}==1){
-		alert('11');
+		alert('삭제됨');
 		location.href="/ticketMovie/ticketMovieList";
 	}else{
 		location.href="/ticketMovie/ticketView?tmNum=<%=request.getParameter("tmNum")%>";
