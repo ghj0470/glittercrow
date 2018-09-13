@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	부서번호 :
+	<input type="text" name="dinum" id="dinum" value="1">
+	<br> 부서명:
+	<input type="text" name="diname" id="diname" value="공부하자">
+	<br> 부서분류 :
+	<select name="ditype" id="ditype">
+		<option value="1">디자인</option>
+		<option value="2">인사</option>
+		<option value="3">경영</option>
+		<option value="4" selected>개발</option>
+	</select>
+	<br>
+	<button data-json="/json/server/depart.jsp">부서 등록</button>
+	<script>
+		var btns = document.querySelectorAll('button[data-json]');
+		for (var i = 0; i < btns.length; i++) {
+			var btn = btns[i];
+			btn.onclick = function() {
+				var xhr = new XMLHttpRequest();
+				var url = this.getAttribute('data-json');
+				var dinum = document.querySelector('#dinum').value;
+				var diname = document.querySelector('#diname').value;
+				var ditype = document.querySelector('#ditype').value;
+				var happy = {
+					dinum : dinum,
+					diname : diname,
+					ditype : ditype
+				};
+				happy = JSON.stringify(happy);
+
+				xhr.onreadystatechange = function() {
+					if (xhr.readyState == xhr.DONE) {
+						alert(xhr.status);
+						if (xhr.status == 200) {
+							alert(xhr.responseText)
+						} else {
+							alert('뭔지 몰라도 실패');
+						}
+					}
+				}
+				xhr.open('GET', url + '?happy=' + encodeURIComponent(happy));
+				xhr.send(); 
+				alert(1);
+			}
+		}
+	</script>
+</body>
+</html>

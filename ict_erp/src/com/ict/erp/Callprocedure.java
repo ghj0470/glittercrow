@@ -11,7 +11,7 @@ import oracle.jdbc.OracleTypes;
 
 public class Callprocedure {
 	public static void main(String[] args) {
-		String sql = "{call P_GET_EMP_CUR(?,?)}"; 
+		String sql = "{call P_GET_EMP_CUR(?,?)}";   
 		Connection con = DBCon.getCon();
 		try {
 			CallableStatement cs = con.prepareCall(sql);

@@ -9,63 +9,69 @@
 		<thead>
 			<tr>
 				<th>번호</th>
-				<th>노래제목</th>
-				<th>가수</th>
-				<th>배급사</th>
-				<th>좋아요</th>
-				<th>싫어요</th>
-				<th>발매일</th>
+				<th>부서명</th>
+				<th>부서코드</th>
+				<th>부서설명</th>
 			</tr>
 		</thead>
 		<tbody id="tBody">
 		</tbody>
 	</table>
-	<button type='button' id='btn'>제이슨 테스트</button>
+	<button>PUT</button>
+	<button>GET</button>
+	<button>POST</button>
+	<button>DELETE</button>
 	<script>
-		document.querySelector('#btn').onclick = function() {
+		var objs = document.querySelectorAll('button');
+		for (var i = 0; i < objs.length; i++) {
+			objs[i].onclick = function() {
+				var req = new XMLHttpRequest();
+				req.onreadystatechange = function() {
+					if (req.readyState == req.DONE) {
+						if (req.status == 200) {
+							var obj = JSON.parse(req.responseText);
+							var html = '';
+							for (var i = 0; i < obj.length; i++) {
+								html += '<tr>';
+								html += '<td>' + obj[i].diNum + '</td>';
+								html += '<td>' + obj[i].diName + '</td>';
+								html += '<td>' + obj[i].diCode + '</td>';
+								html += '<td>' + obj[i].diDesc + '</td>';
+								html += '</tr>';
+							}
+							document.querySelector('#tBody').innerHTML = html;
+						} else {
 
-			var req = new XMLHttpRequest();//6버전 이하에만 안돌아가지만 현재는 다돌아간다
-
-			req.onreadystatechange = function() {
-				if (req.readyState == req.DONE) { //req.done 은 결국에 XMLHttpRequest상수값이기 때문에 결국에 4이다 그래서 그냥 4를 걸어주나 req.done이나 같다
-					if (req.status == 200) {
-						var obj = JSON.parse(req.responseText);
-						var html='';
-						for(var i=0;i<obj.length;i++){ //콜백헬 (어려움)1.동작 :  1턴 탓다가 갔다가 디버깅  (5번하면 5번동안 )
-							html += '<tr>';
-							html += '<td>'+ obj[i].mcNum +'</td>';
-							html += '<td>'+ obj[i].mcName +'</td>';
-							html += '<td>'+ obj[i].mcSinger +'</td>';
-							html += '<td>'+ obj[i].mcVendor +'</td>';
-							html += '<td>'+ obj[i].mcLike +'</td>';
-							html += '<td>'+ obj[i].mcDislike +'</td>';
-							html += '<td>'+ obj[i].mcCredat +'</td>';
-							html += '</tr>';
 						}
-						document.querySelector('#tBody').innerHTML = html;//순수 자바로 사용하면 세션 구분을 못하니깐 
-						                                               //jwt를 사용하는데 이걸 사용할떄는 프론트엔드 서버와 백엔드 서버가 따로있을때 사용한다
-						                                               //div innerHTML은 
-                            // console.log(req.responseText);
-					} else {
-
 					}
-
-					//	alert('무언가 전송 완료'); //timeout을 걸어줘야된다 0 1 2 3일때
 				}
-				//alert(req.readyState);
-			}
-			var param = {//이건 비동기여서 어떤순서로 몇번째로 출력될지 모른다
-				name : '홍길동',
-				age : '33',
-				address : 'seoul'
-			};
-			//console.log(param);
-			param = encodeURIComponent(JSON.stringify(param));//stringify 객체를 string으로 바꿈  , 특수문자를
-			//console.log(param);
-			//uri를 인코딩 해주는것 ex도메인에 특수문자 들어간것을 본적있을것이다 그런것이다
+				var param = {
+					name : '홍길동',
+					age : '33',
+					address : 'seoul'
+				};
+				
+				var method = this.innerHTML;
+				param = JSON.stringify(param);
+				if (method == 'GET') {
+					param = encodeURIComponent(JSON.stringify(param));
+					param = '?param' + param;
+					req.open(method, '/json/list' + param);
 
-			req.open('post', '/json/list?param=' + param); //post쓰면 post르 받고 get으로쓰면 get으로받는다
-			req.send();
+				} else {
+					req.open(method, '/json/list');
+				}
+				req.setRequestHeader("Content-Type",
+						"application/josn; charset= UTF-8");
+
+				if (method == 'GET') {
+					req.sent();
+				} else {
+					req.send(param);
+				}
+
+				//req.send(JSON.stringify(param));
+			}
 		}
 	</script>
 </body>

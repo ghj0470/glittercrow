@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+	사원번호 :
+	<input type="text" name="empno" id="empno" value="1">
+	<br> 사원이름 :
+	<input type="text" name="empname" id="empname" value="1">
+	<br> 사원직위 :
+	<input type="text" name="empjob" id="empjob" value="1">
+	<br> 사원번호 :
+	<input type="text" name="empmgr" id="empmgr" value="1">
+	<br> 사원번호 :
+	<input type="text" name="hiredate" id="hiredate" value="1">
+	<br> 사원번호 :
+	<input type="text" name="sal" id="sal" value="1">
+	<br> 사원번호 :
+	<input type="text" name="comm" id="comm" value="1">
+	<br> 사원번호 :
+	<select name="deptno" id="deptno">
+		<option value="1" selected>10</option>
+		<option value="2">20</option>
+		<option value="3">30</option>
+		<option value="4">50</option>
+	</select>
+	<br>
+	<button data-json="/json/server/emp.jsp">등록</button>
+
+	<script>
+		var btns = document.querySelectorAll('button[data-json]');
+		for (var i = 0; i < btns.length; i++) {
+			var btn = btns[i];
+			btn.onclick = function() {
+				var xhr = new XMLHttpRequest();
+				var url = this.getAttribute('data-json');
+				var empno = document.querySelector('#empno').value;
+				var empname = document.querySelector('#empname').value;
+				var empjob = document.querySelector('#empjob').value;
+				var empmgr = document.querySelector('#empmgr').value;
+				var hiredate = document.querySelector('#hiredate').value;
+				var sal = document.querySelector('#sal').value;
+				var comm = document.querySelector('#comm').value;
+				var deptno = document.querySelector('#deptno').value;
+				var happy = {
+					empno : empno,
+					empname : empname,
+					empmgr : empmgr,
+					hiredate : hiredate,
+					sal : sal,
+					comm : comm,
+					deptno : deptno
+				};
+				happy = JSON.stringify(happy);
+
+				xhr.onreadystatechange = function() {
+					if (xhr.readyState == xhr.DONE) {
+						alert(xhr.status);
+						if (xhr.status == 200) {
+							alert(xhr.responseText)
+						} else {
+							alert('뭔지 몰라도 실패');
+						}
+					}
+				}
+				xhr.open('GET', url + '?happy=' + encodeURIComponent(happy));
+				xhr.send();
+				alert(1);
+			}
+		}
+	</script>
+</body>
+</html>

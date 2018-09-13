@@ -18,9 +18,9 @@ import com.ict.erp.service.impl.MusicServiceImpl;
 import com.ict.erp.vo.MusicChart;
 
 
-@WebServlet(
-		urlPatterns = "/json/*"
-		)
+//@WebServlet(
+//		urlPatterns = "/json/*"
+//		)
 public class JsonServletPost extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private  Gson gs = new Gson();
