@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>부서코드</th>
+				<th>부서명</th>
+				<th>부서설명</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${diList}" var="di">
+				<tr>
+					<td>${di.diNum}</td>
+					<td>${di.diCode}</td>
+					<td>${di.diName}</td>
+					<td>${di.diDesc}</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+	<button data-json="/json/sercer/depart2.jsp">부서등록</button>
+</body>
+</html>
