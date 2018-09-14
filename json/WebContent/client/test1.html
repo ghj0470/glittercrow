@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	이름 :
+	<input type="text" name="name" id="name" value="홍길동">
+	<br> 아이디 :
+	<input type="text" name="id" id="id" value="hong">
+	<br> 비밀번호 :
+	<input type="password" name="pwd" id="pwd" value="1234">
+	<br> 성별 :
+	<select name="trans" id="trans">
+		<option value="1">남</option>
+		<option value="2" selected>여</option>
+		<!--selected를 넣으면 이게먼저 체크된다  -->
+	</select>
+	<br>
+	<button data-json="/json/server/test.jsp">회원가입</button>
+	<script>
+		var btns = document.querySelectorAll('button[data-json]');<!--값상관없이 버튼타입중에 datajson을 가지고있는걸 싹다-->
+		for (var i = 0; i < btns.length; i++) {
+			var btn = btns[i];
+			btn.onclick = function() {
+				var url = this.getAttribute('data-json');
+				var xhr = new XMLHttpRequest(); 
+				var name = document.querySelector('#name').value;
+				var id = document.querySelector('#id').value;
+				var pwd = document.querySelector('#pwd').value;
+				var trans = document.querySelector('#trans').value;
+				var param = {name:name,id:id,pwd:pwd,trans:trans}; <!--{key:위에변수가져온거,key(name):위에변수가져온거(name)}-->
+				param = JSON.stringify(param);
+				<!--alert(param);-->
+				
+				xhr.onreadystatechange = function(){
+					if(xhr.readyState==xhr.DONE){
+						alert(xhr.status);
+					 if(xhr.status==200){
+						 var json = xhr.responseText;
+						 var list = JSON.parse(json);
+		                 
+						 alert(list[1].name);
+					 }else{
+						 alert('뭔지 몰라도 실패');
+					 }
+					}
+				}
+				
+				xhr.open('POST',url); //('GET',url + '?param=' + encodeURIComponent(param)); //encodeURIComponent() 를 써주지 안으면 에러가뜬다 
+				xhr.send(param);
+			    alert(1); //순서대로 실행하면 1 . alert( url) 2.alert(1) 로 나온다 생각하지만 비동기 방식이여서 모른다  
+			}
+				
+		}
+	</script>
+</body>
+</html>

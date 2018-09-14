@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<button data-attr="내가만든거1">날 눌러봐</button>
+	<button data-attr="내가만든거2" onclick="clickBtn()">날 눌러봐2</button>
+	<script>
+	var btn = document.querySelector('button[data-attr]'); //1번만 실행됨 all이아니여서
+	btn.onclick = function(){
+		this.innerHTML = this.getAttribute('data-attr');
+	}
+	
+	</script>
+	<script>
+		function clickBtn() {
+			alert('나나나~');
+		}
+		var btn = document.querySelector('button[data-attr]'); //1번만 실행됨 all이아니여서
+		btn.onclick = clickBtn;
+
+		var a = 1;
+		alert(a);
+
+		a = function() {
+			alert(1);
+		}
+		alert(a);
+		alert(window==this); //외부에서 쓰지 x 이해도가 높을때 사용= 프로그램꼬임
+		alert(window.a==this.a);
+	</script>
+</body>
+</html>
